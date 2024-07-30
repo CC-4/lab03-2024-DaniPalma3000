@@ -93,8 +93,7 @@ POTENCIA = "^"
 LPAREN = "("
 RPAREN = ")"
 MUNARIO = "~"
-ENTEROS = [0-9]+
-
+ENTEROS = [0-9]+|[0-9]+.[0.9]+
 
 %%
 
