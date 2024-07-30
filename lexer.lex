@@ -82,14 +82,45 @@ import java.io.IOException;
 %function nextToken
 %type Token
 
-SEMI = ";" // Definan aqui sus Tokens/ER por ejemplo: "el token SEMI"
-WHITE = (" "|\t|\n)
+SEMI = ";"
+WHITE = (" "|\t|\n|\r|\s)
+MAS = "+"
+MENOS = "-"
+POR = "\\*"
+DIVIDIDO = "/"
+PORCENTAJE = "%"
+POTENCIA = "^"
+LPAREN = "("
+RPAREN = ")"
+MUNARIO = "~"
+ENTEROS = [0-9]+
+
 
 %%
 
-<YYINITIAL>{SEMI}   { return new Token(Token.SEMI);   }
+<YYINITIAL> {SEMI}       { return new Token(Token.SEMI);   }
 
-<YYINITIAL>{WHITE}  { /* NO HACER NADA */             }
+<YYINITIAL> {MAS}        { return new Token(Token.PLUS);   }
 
-<YYINITIAL>.        { return new Token(Token.ERROR);
+<YYINITIAL> {MENOS}      { return new Token(Token.MINUS);   }
+
+<YYINITIAL> {POR}        { return new Token(Token.MULT);   }
+
+<YYINITIAL> {DIVIDIDO}   { return new Token(Token.DIV);   }
+
+<YYINITIAL> {PORCENTAJE} { return new Token(Token.MOD);   }
+
+<YYINITIAL> {POTENCIA}   { return new Token(Token.EXP);   }
+
+<YYINITIAL> {LPAREN}     { return new Token(Token.LPAREN);   }
+
+<YYINITIAL> {RPAREN}     { return new Token(Token.RPAREN);   }
+
+<YYINITIAL> {MUNARIO}    { return new Token(Token.UNARY);   }
+
+<YYINITIAL> {ENTEROS}    { return new Token(Token.NUMBER, yytext());   }
+
+<YYINITIAL> {WHITE}      { /* NO HACER NADA */             }
+
+<YYINITIAL>.             { return new Token(Token.ERROR);
                       /* todo lo demas es ERROR */ }
